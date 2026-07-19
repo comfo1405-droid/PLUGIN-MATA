@@ -1,0 +1,57 @@
+package com.messhy.plugin.commands;
+
+import com.messhy.plugin.MesshyPlugin;
+import com.messhy.plugin.util.ColorUtil;
+import org.bukkit.ChatColor;
+import org.bukkit.Bukkit;
+import org.bukkit.command.Command;
+import org.bukkit.command.CommandExecutor;
+import org.bukkit.command.CommandSender;
+
+public class AnnouncementCommand implements CommandExecutor {
+
+    private final MesshyPlugin plugin;
+
+    public AnnouncementCommand(MesshyPlugin plugin) {
+        this.plugin = plugin;
+    }
+
+    @Override
+    public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
+        if (!sender.hasPermission("messhy.admin")) {
+            sender.sendMessage(ColorUtil.colorize("&cYou do not have permission to do that."));
+            return true;
+        }
+        if (args.length < 2) {
+            sender.sendMessage(ColorUtil.colorize("&cUsage: /announcement <message> <color>"));
+            return true;
+        }
+
+        String colorArg = args[args.length - 1];
+        ChatColor color = ColorUtil.parse(colorArg);
+        if (color == null) {
+            sender.sendMessage(ColorUtil.colorize("&cUnknown color: " + colorArg
+                    + ". Try names like gold, red, green, aqua, or codes like &6."));
+            return true;
+        }
+
+        StringBuilder sb = new StringBuilder();
+        for (int i = 0; i < args.length - 1; i++) {
+            sb.append(args[i]).append(' ');
+        }
+        String message = sb.toString().trim();
+
+        String line = ChatColor.STRIKETHROUGH + "" + ChatColor.GRAY
+                + "-----------------------------------------------------";
+        String header = ColorUtil.colorize("&e&lANNOUNCEMENT");
+
+        for (var player : Bukkit.getOnlinePlayers()) {
+            player.sendMessage(line);
+            player.sendMessage(header);
+            player.sendMessage(color + message);
+            player.sendMessage(line);
+        }
+        Bukkit.getConsoleSender().sendMessage("[Announcement] " + message);
+        return true;
+    }
+}

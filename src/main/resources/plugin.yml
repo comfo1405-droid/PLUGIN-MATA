@@ -1,0 +1,67 @@
+name: messhy_js
+version: '${project.version}'
+main: com.messhy.plugin.MesshyPlugin
+api-version: '1.21'
+author: Aitjhya
+description: All-in-one server management plugin (auth, moderation, announcements, anti-cheat)
+
+commands:
+  login:
+    description: Log into your account
+    usage: /login <password>
+  register:
+    description: Register a new account
+    usage: /register <password> <confirmPassword>
+  server:
+    description: Set the server to private or public
+    usage: /server <private|public>
+    permission: messhy.admin
+  reg-slots:
+    description: Add or remove registration slots for a user's IP
+    usage: /reg-slots <add|remove> <user> <slots>
+    permission: messhy.admin
+  announcement:
+    description: Broadcast a server-wide announcement
+    usage: /announcement <message> <color>
+    permission: messhy.admin
+  user-say:
+    description: Send a colored message to a specific user
+    usage: /user-say <user> <message> <color>
+    permission: messhy.admin
+  anti-spam:
+    description: Enable or disable anti-spam protection
+    usage: /anti-spam <enable|disable>
+    permission: messhy.admin
+  bad-word:
+    description: Manage the bad word filter
+    usage: /bad-word add <word>
+    permission: messhy.admin
+  anti-cheating:
+    description: Enable or disable basic anti-cheat checks
+    usage: /anti-cheating <enable|disable>
+    permission: messhy.admin
+  anti-auto-totem:
+    description: Enable or disable auto-totem detection
+    usage: /anti-auto-totem <enable|disable>
+    permission: messhy.admin
+  freeze:
+    description: Freeze or unfreeze a player
+    usage: /freeze <user>
+    permission: messhy.admin
+  vanish:
+    description: Toggle vanish mode
+    usage: /vanish
+    permission: messhy.admin
+  warnings:
+    description: Check a user's bad-word warning count
+    usage: /warnings <user>
+    permission: messhy.admin
+  unban:
+    description: Unban a user
+    usage: /unban <user>
+    permission: messhy.admin
+
+permissions:
+  messhy.admin:
+    description: Access to all messhy_js admin commands
+    default: op
